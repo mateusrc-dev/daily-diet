@@ -14,3 +14,10 @@ export const Title = styled.Text`
   margin-bottom: 8px;
   margin-top: 40px;
 `;
+
+export const Date = styled.Text`
+  font-family: ${({ theme }) => theme.FONT_FAMILY.BOLD};
+  font-size: ${({ theme }) => theme.FONT_SIZE.FS4};
+  line-height: 130%;
+  color: ${({ theme }) => theme.COLORS.GRAY_1};
+`;
