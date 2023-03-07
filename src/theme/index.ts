@@ -13,6 +13,7 @@ export default {
     GRAY_5: '#DDDEDF',
     GRAY_6: '#DDDEDF',
     GRAY_7: '#FAFAFA',
+    GRAY_8: '#EFF0F0',
     WHITE: '#FFFFFF',
   },
   FONT_FAMILY: {

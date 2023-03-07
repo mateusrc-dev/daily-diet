@@ -1,6 +1,13 @@
-import { PropsWithChildren } from "react";
-import { Container } from "./styles";
+import { ReactNode } from "react";
+import { ButtonTypeProps, Container } from "./styles";
 
-export function Button({ children }: PropsWithChildren) {
-  return <Container>{children}</Container>;
+interface Props {
+  type?: ButtonTypeProps;
+  children: ReactNode;
+}
+
+export function Button({ type = "dark", children }: Props) {
+  return (
+    <Container type={type}>{children}</Container>
+  );
 }

@@ -1,8 +1,13 @@
 import { Container, Percent, Text, ButtonIcon, Icon } from "./styles";
 
-export function ResultDiet() {
+interface Props {
+  height?: string,
+  color?: string,
+}
+
+export function ContainerInformation({ height = "102px", color = "#E5F0DB"}: Props) {
   return (
-    <Container>
+    <Container height={height} color={color}>
       <ButtonIcon>
         <Icon />
       </ButtonIcon>

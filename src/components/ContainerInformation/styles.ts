@@ -1,15 +1,21 @@
 import { ArrowUpRight } from "phosphor-react-native";
+import { View } from "react-native";
 import styled from "styled-components/native";
 
-export const Container = styled.View`
+interface Props {
+  height: string,
+  color: string,
+}
+
+export const Container = styled(View)<Props>`
   flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 20px 16px;
   gap: 2px;
   width: 100%;
-  height: 102px;
-  background: ${({ theme }) => theme.COLORS.GREEN_LIGHT};
+  height: ${({ height }) => height};
+  background: ${({ color }) => color};
   border-radius: 8px;
   margin-top: 32px;
 `;
