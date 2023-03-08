@@ -14,13 +14,20 @@ export const Container = styled(TouchableOpacity)<ButtonProps>`
   gap: 12px;
   width: 100%;
   height: 50px;
-  line-height: 130%;
   background: ${({ theme, type }) =>
     type === "dark" ? theme.COLORS.GRAY_2 : theme.COLORS.WHITE};
-  border-width: ${({ type }) => (type === "dark" ? "0px" : "1px")};
+  border-width: 1px;
   border-style: solid;
   border-color: ${({ theme, type }) =>
     type === "dark" ? theme.COLORS.GRAY_2 : theme.COLORS.GRAY_1};
   border-radius: 6px;
 `;
+
+export const TitleButton = styled(Text)<ButtonProps>`
+  font-family: ${({ theme }) => theme.FONT_FAMILY.BOLD};
+  font-size: ${({ theme }) => theme.FONT_SIZE.FS2}px;
+  color: ${({ theme, type }) =>
+    type === "dark" ? theme.COLORS.WHITE : theme.COLORS.GRAY_1};
+`;
+
 

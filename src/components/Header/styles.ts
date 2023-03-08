@@ -9,13 +9,27 @@ export const Container = styled.View`
 `
 
 export const Logo = styled.Image`
-  height: 37px;
-  width: 82px;
+  min-height: 37px;
+  min-width: 82px;
+  max-height: 37px;
+  max-width: 82px;
+`
+
+export const ContainerAvatar = styled.View`
+  min-width: 40px;
+  min-height: 40px;
+  max-width: 40px;
+  max-height: 40px;
+  border-radius: 9999px;
+  border: 2px solid ${({theme}) => theme.COLORS.GRAY_1};
+  overflow: hidden;
+  align-items: center;
+  justify-content: center;
 `
 
 export const Avatar = styled.Image`
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  border: 3px solid ${({theme}) => theme.COLORS.GRAY_2};
+  min-width: 40px;
+  min-height: 40px;
+  max-width: 40px;
+  max-height: 40px;
 `

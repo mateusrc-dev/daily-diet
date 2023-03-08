@@ -22,7 +22,7 @@ export const Container = styled(View)<Props>`
 
 export const Percent = styled.Text`
   font-family: ${({ theme }) => theme.FONT_FAMILY.BOLD};
-  font-size: 32px;
+  font-size: ${({ theme }) => theme.FONT_SIZE.FS6}px;
   align-items: center;
   text-align: center;
   color: ${({ theme }) => theme.COLORS.GRAY_1};
@@ -30,7 +30,7 @@ export const Percent = styled.Text`
 
 export const Text = styled.Text`
   font-family: ${({ theme }) => theme.FONT_FAMILY.REGULAR};
-  font-size: 14px;
+  font-size: ${({ theme }) => theme.FONT_SIZE.FS2}px;
   align-items: center;
   text-align: center;
   color: ${({ theme }) => theme.COLORS.GRAY_2};

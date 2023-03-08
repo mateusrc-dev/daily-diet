@@ -6,16 +6,17 @@ import {
   Separate,
   StatusTypeProps,
 } from "./styles";
+import { TouchableOpacityProps } from "react-native";
 
-interface Props {
+type Props = TouchableOpacityProps & {
   hour: string;
   dietName: string;
   dietStatus: StatusTypeProps;
 }
 
-export function Snack({ hour, dietName, dietStatus = "accomplished" }: Props) {
+export function Snack({ hour, dietName, dietStatus = "accomplished", ...rest }: Props) {
   return (
-    <Container>
+    <Container {...rest}>
       <Hour>{hour}</Hour>
       <Separate />
       <DietName>{dietName}</DietName>

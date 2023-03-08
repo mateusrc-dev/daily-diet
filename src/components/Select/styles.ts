@@ -20,7 +20,7 @@ export const ContainerSelected = styled(TouchableOpacity)<Props>`
   background-color: ${({ theme, type }) =>
     type === "yes" ? theme.COLORS.GREEN_LIGHT : theme.COLORS.RED_LIGHT};
 
-  border-width: ${({ select }) => (select === true ? "1px" : "0px")};
+  border-width: 1px;
   border-style: solid;
   border-color: ${({ type, theme }) =>
     type === "yes" ? theme.COLORS.GREEN_DARK : theme.COLORS.RED_DARK};
@@ -37,7 +37,7 @@ export const Container = styled(TouchableOpacity)<Props>`
 
   background-color: ${({ theme }) => theme.COLORS.GRAY_8};
 
-  border-width: ${({ select }) => (select === true ? "1px" : "0px")};
+  border-width: 1px;
   border-style: solid;
   border-color: ${({ type, theme }) =>
     type === "yes" ? theme.COLORS.GREEN_DARK : theme.COLORS.RED_DARK};
@@ -45,7 +45,7 @@ export const Container = styled(TouchableOpacity)<Props>`
 
 export const Title = styled.Text`
   font-family: ${({ theme }) => theme.FONT_FAMILY.BOLD};
-  font-size: ${({ theme }) => theme.FONT_SIZE.FS2};
+  font-size: ${({ theme }) => theme.FONT_SIZE.FS2}px;
   color: ${({ theme }) => theme.COLORS.GRAY_1};
 `;
 
@@ -54,5 +54,5 @@ export const Status = styled(View)<Props>`
   height: 8px;
   background-color: ${({ theme, type }) =>
     type === "yes" ? theme.COLORS.GREEN_DARK : theme.COLORS.RED_DARK};
-  border-radius: 50%;
+  border-radius: 9999px;
 `;

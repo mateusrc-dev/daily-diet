@@ -1,13 +1,19 @@
-import { ReactNode } from "react";
-import { ButtonTypeProps, Container } from "./styles";
+import { TouchableOpacityProps } from "react-native";
+import { ButtonTypeProps, Container, TitleButton } from "./styles";
+import { Plus } from "phosphor-react-native";
+import { useTheme } from "styled-components/native";
 
-interface Props {
+type Props = TouchableOpacityProps & {
   type?: ButtonTypeProps;
-  children: ReactNode;
-}
+  title: string;
+};
 
-export function Button({ type = "dark", children }: Props) {
+export function Button({ type = "dark", title, ...rest }: Props) {
+  const { COLORS } = useTheme();
   return (
-    <Container type={type}>{children}</Container>
+    <Container {...rest} type={type}>
+      <Plus color={COLORS.GRAY_6} />
+      <TitleButton type={type}>{title}</TitleButton>
+    </Container>
   );
 }

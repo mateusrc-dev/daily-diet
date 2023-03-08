@@ -1,5 +1,4 @@
 import styled from "styled-components/native";
-import { Text } from "react-native";
 
 export const Container = styled.View`
   flex: 1;
@@ -9,7 +8,7 @@ export const Container = styled.View`
 
 export const Title = styled.Text`
   font-family: ${({ theme }) => theme.FONT_FAMILY.REGULAR};
-  font-size: ${({ theme }) => theme.FONT_SIZE.FS3};
+  font-size: ${({ theme }) => theme.FONT_SIZE.FS3}px;
   align-items: center;
   color: ${({ theme }) => theme.COLORS.GRAY_1};
   margin-bottom: 8px;
@@ -18,20 +17,8 @@ export const Title = styled.Text`
 
 export const Date = styled.Text`
   font-family: ${({ theme }) => theme.FONT_FAMILY.BOLD};
-  font-size: ${({ theme }) => theme.FONT_SIZE.FS4};
-  line-height: 130%;
+  font-size: ${({ theme }) => theme.FONT_SIZE.FS4}px;
   color: ${({ theme }) => theme.COLORS.GRAY_1};
+  margin-top: 32px; 
 `;
 
-export type ButtonTypeProps = "dark" | "light";
-
-type ButtonProps = {
-  type: ButtonTypeProps;
-};
-
-export const TitleButton = styled(Text)<ButtonProps>`
-  font-family: ${({ theme }) => theme.FONT_FAMILY.BOLD};
-  font-size: ${({ theme }) => theme.FONT_SIZE.FS2};
-  color: ${({ theme, type }) =>
-    type === "dark" ? theme.COLORS.WHITE : theme.COLORS.GRAY_1};
-`;
