@@ -1,17 +1,62 @@
-import { Avatar, Container, ContainerAvatar, Logo } from "./styles";
+import {
+  Avatar,
+  ButtonIcon,
+  ButtonIconSnack,
+  Container,
+  ContainerAvatar,
+  Icon,
+  IconSnack,
+  Logo,
+  Percent,
+  PercentContainer,
+  SnackContainer,
+  Text,
+  TextSnack,
+} from "./styles";
 import LogoImg from "@assets/Logo.png";
 
-export function Header() {
+interface HeaderProps {
+  type?: "default" | "percentDetails" | "snack";
+  color?: string;
+  colorIcon?: string;
+}
+
+export function Header({
+  type = "default",
+  color = "#E5F0DB",
+  colorIcon = "#639339",
+}: HeaderProps) {
   return (
-    <Container>
-      <Logo source={LogoImg} />
-      <ContainerAvatar>
-        <Avatar
-          source={{
-            uri: "https://avatars.githubusercontent.com/u/109779094?v=4",
-          }}
-        />
-      </ContainerAvatar>
-    </Container>
+    <>
+      {type === "default" && (
+        <Container>
+          <Logo source={LogoImg} />
+          <ContainerAvatar>
+            <Avatar
+              source={{
+                uri: "https://avatars.githubusercontent.com/u/109779094?v=4",
+              }}
+            />
+          </ContainerAvatar>
+        </Container>
+      )}
+      {type === "percentDetails" && (
+        <PercentContainer color={color}>
+          <Percent>90,86%</Percent>
+          <Text>das refeições dentro da dieta</Text>
+          <ButtonIcon>
+            <Icon color={colorIcon} />
+          </ButtonIcon>
+        </PercentContainer>
+      )}
+      {type === "snack" && (
+        <SnackContainer color={color}>
+          <TextSnack>Nova refeição</TextSnack>
+          <ButtonIconSnack>
+            <IconSnack />
+          </ButtonIconSnack>
+        </SnackContainer>
+      )}
+    </>
   );
 }

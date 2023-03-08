@@ -38,7 +38,6 @@ export const Text = styled.Text`
 
 export const Icon = styled(ArrowUpRight).attrs(({ theme }) => ({
   size: theme.FONT_SIZE.FS5,
-  color: theme.COLORS.GREEN_DARK,
 }))``;
 
 export const ButtonIcon = styled.TouchableOpacity`
