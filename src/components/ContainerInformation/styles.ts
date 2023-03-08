@@ -13,11 +13,11 @@ export const Container = styled(View)<Props>`
   align-items: center;
   padding: 20px 16px;
   gap: 2px;
-  width: 100%;
-  height: ${({ height }) => height};
+  flex: 1;
+  max-height: ${({ height }) => height};
+  min-height: ${({ height }) => height};
   background: ${({ color }) => color};
   border-radius: 8px;
-  margin-top: 32px;
 `;
 
 export const Percent = styled.Text`

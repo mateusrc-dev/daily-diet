@@ -22,3 +22,6 @@ export const Date = styled.Text`
   margin-top: 32px; 
 `;
 
+export const ContainerSpace = styled.View`
+  margin-top: 32px;
+`
