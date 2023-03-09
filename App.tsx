@@ -1,6 +1,7 @@
 import { Diets } from "./src/screens/Diets";
 import { ResultDiets } from "@screens/ResultDiets";
 import { NewSnack } from "@screens/NewSnack";
+import { EditSnack } from "@screens/EditSnack"; 
 import { DetailsSnack } from "@screens/DetailsSnack";
 import { ThemeProvider } from "styled-components/native";
 import theme from "@theme/index";
@@ -22,7 +23,7 @@ export default function App() {
         backgroundColor="transparent"
         translucent
       />
-      {fontsLoaded ? <DetailsSnack /> : <Loading />}
+      {fontsLoaded ? <EditSnack /> : <Loading />}
     </ThemeProvider>
   );
 }

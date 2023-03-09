@@ -1,4 +1,4 @@
-import styled from "styled-components/native";
+import styled, { css } from "styled-components/native";
 import { View } from "react-native";
 
 export const Container = styled.View`
@@ -16,9 +16,11 @@ export const Main = styled.View`
 `;
 
 export const Text = styled.Text`
-  font-family: ${({ theme }) => theme.FONT_FAMILY.BOLD};
-  font-size: ${({ theme }) => theme.FONT_SIZE.FS2};
-  color: ${({ theme }) => theme.COLORS.GRAY_1};
+  ${({ theme }) => css`
+    font-family: ${theme.FONT_FAMILY.BOLD};
+    font-size: ${theme.FONT_SIZE.FS2};
+    color: ${theme.COLORS.GRAY_1};
+  `}
   margin-top: 33px;
   margin-bottom: 23px;
 `;
@@ -30,16 +32,20 @@ type Props = {
 export const ContainerSpace = styled(View)<Props>`
   flex: 1;
   width: 100%;
-  min-height: ${({height}) => height};
-  max-height: ${({height}) => height};
+  ${({ height }) => css`
+    min-height: ${height};
+    max-height: ${height};
+  `}
   margin-top: 12px;
 `;
 
 export const ContainerSpaceRow = styled(View)<Props>`
   flex: 1;
   width: 100%;
-  min-height: ${({height}) => height};
-  max-height: ${({height}) => height};
+  ${({ height }) => css`
+    min-height: ${height};
+    max-height: ${height};
+  `}
   flex-direction: row;
   margin-top: 12px;
   gap: 12px;

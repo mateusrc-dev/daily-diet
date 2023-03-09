@@ -1,4 +1,4 @@
-import styled from "styled-components/native";
+import styled, { css } from "styled-components/native";
 import { View } from "react-native";
 
 export const Container = styled.View`
@@ -16,23 +16,29 @@ export const Main = styled.View`
 
 export const Text = styled.Text`
   margin-top: 8px;
-  font-family: ${({ theme }) => theme.FONT_FAMILY.REGULAR};
-  font-size: ${({ theme }) => theme.FONT_SIZE.FS3}px;
-  color: ${({ theme }) => theme.COLORS.GRAY_2};
+  ${({ theme }) => css`
+    font-family: ${theme.FONT_FAMILY.REGULAR};
+    font-size: ${theme.FONT_SIZE.FS3}px;
+    color: ${theme.COLORS.GRAY_2};
+  `}
 `;
 
 export const TitleOne = styled.Text`
   margin-top: 40px;
-  font-family: ${({ theme }) => theme.FONT_FAMILY.BOLD};
+  ${({ theme }) => css`
+    font-family: ${theme.FONT_FAMILY.BOLD};
+    color: ${theme.COLORS.GRAY_1};
+  `}
   font-size: 20px;
-  color: ${({ theme }) => theme.COLORS.GRAY_1};
 `;
 
 export const TitleTwo = styled.Text`
   margin-top: 24px;
-  font-family: ${({ theme }) => theme.FONT_FAMILY.BOLD};
-  font-size: ${({ theme }) => theme.FONT_SIZE.FS2}px;
-  color: ${({ theme }) => theme.COLORS.GRAY_1};
+  ${({ theme }) => css`
+    font-family: ${theme.FONT_FAMILY.BOLD};
+    font-size: ${theme.FONT_SIZE.FS2}px;
+    color: ${theme.COLORS.GRAY_1};
+  `}
 `;
 
 export const ContainerDietState = styled.View`
@@ -50,9 +56,11 @@ export const ContainerDietState = styled.View`
 `;
 
 export const TextDietState = styled.Text`
-  font-family: ${({ theme }) => theme.FONT_FAMILY.REGULAR};
-  font-size: ${({ theme }) => theme.FONT_SIZE.FS2}px;
-  color: ${({ theme }) => theme.COLORS.GRAY_1};
+  ${({ theme }) => css`
+    font-family: ${theme.FONT_FAMILY.REGULAR};
+    font-size: ${theme.FONT_SIZE.FS2}px;
+    color: ${theme.COLORS.GRAY_1};
+  `}
 `;
 
 type Props = {
@@ -67,10 +75,10 @@ export const StateDiet = styled(View)<Props>`
 `;
 
 export const ContainerButtonOne = styled.View`
-    margin-top: auto;
-    margin-bottom: 9px;
+  margin-top: auto;
+  margin-bottom: 9px;
 `;
 
 export const ContainerButtonTwo = styled.View`
-    margin-bottom: 40px;
+  margin-bottom: 40px;
 `;

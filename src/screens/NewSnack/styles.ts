@@ -1,4 +1,4 @@
-import styled from "styled-components/native";
+import styled, { css } from "styled-components/native";
 
 export const Container = styled.View`
   flex: 1;
@@ -37,9 +37,11 @@ export const ContainerInputsSelect = styled.View`
 `;
 
 export const Title = styled.Text`
-  font-family: ${({ theme }) => theme.FONT_FAMILY.BOLD};
-  font-size: ${({ theme }) => theme.FONT_SIZE.FS2}px;
-  color: ${({ theme }) => theme.COLORS.GRAY_2};
+  ${({ theme }) => css`
+    font-family: ${theme.FONT_FAMILY.BOLD};
+    font-size: ${theme.FONT_SIZE.FS2}px;
+    color: ${theme.COLORS.GRAY_2};
+  `}
 `;
 
 export const ContainerSelect = styled.View`
@@ -72,25 +74,31 @@ export const ImageContainer = styled.Image`
 
 export const TitleSuccess = styled.Text`
   margin-bottom: 8px;
-  font-family: ${({ theme }) => theme.FONT_FAMILY.BOLD};
-  font-size: ${({ theme }) => theme.FONT_SIZE.FS5}px;
-  color: ${({ theme }) => theme.COLORS.GREEN_DARK};
+  ${({ theme }) => css`
+    font-family: ${theme.FONT_FAMILY.BOLD};
+    font-size: ${theme.FONT_SIZE.FS5}px;
+    color: ${theme.COLORS.GREEN_DARK};
+  `}
 `;
 
 export const TitleFailure = styled.Text`
   margin-bottom: 8px;
-  font-family: ${({ theme }) => theme.FONT_FAMILY.BOLD};
-  font-size: ${({ theme }) => theme.FONT_SIZE.FS5}px;
-  color: ${({ theme }) => theme.COLORS.RED_DARK};
+  ${({ theme }) => css`
+    font-family: ${theme.FONT_FAMILY.BOLD};
+    font-size: ${theme.FONT_SIZE.FS5}px;
+    color: ${theme.COLORS.RED_DARK};
+  `}
 `;
 
 export const TextSuccess = styled.Text`
   margin-bottom: 40px;
-  font-family: ${({ theme }) => theme.FONT_FAMILY.REGULAR};
-  font-size: ${({ theme }) => theme.FONT_SIZE.FS3}px;
-  color: ${({ theme }) => theme.COLORS.GRAY_1};
+  ${({ theme }) => css`
+    font-family: ${theme.FONT_FAMILY.REGULAR};
+    font-size: ${theme.FONT_SIZE.FS3}px;
+    color: ${theme.COLORS.GRAY_1};
+  `}
 `;
 
 export const TextBold = styled.Text`
   font-family: ${({ theme }) => theme.FONT_FAMILY.BOLD};
-`
+`;
