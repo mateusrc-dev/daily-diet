@@ -4,6 +4,7 @@ import { Input } from "@components/Input";
 import { Select } from "@components/Select";
 import { useState } from "react";
 import ImageSuccess from "../../assets/Illustration.png";
+import ImageFailure from "../../assets/Failure.png";
 import {
   Container,
   Main,
@@ -15,6 +16,10 @@ import {
   ContainerButton,
   SuccessContainer,
   ImageContainer,
+  TitleSuccess,
+  TextSuccess,
+  TitleFailure,
+  TextBold,
 } from "./styles";
 
 export function NewSnack() {
@@ -69,7 +74,23 @@ export function NewSnack() {
       )}
       {stateSelect === "yes" && (
         <SuccessContainer>
+          <TitleSuccess>Continue assim!</TitleSuccess>
+          <TextSuccess>
+            Você continua <TextBold>dentro da dieta</TextBold>. Muito bem!
+          </TextSuccess>
           <ImageContainer source={ImageSuccess} />
+          <Button title="Ir para a página inicial" />
+        </SuccessContainer>
+      )}
+      {stateSelect === "not" && (
+        <SuccessContainer>
+          <TitleFailure>Que pena!</TitleFailure>
+          <TextSuccess>
+            Você <TextBold>saiu da dieta</TextBold> dessa vez, mas continue se
+            esforçando e não desista!
+          </TextSuccess>
+          <ImageContainer source={ImageFailure} />
+          <Button title="Ir para a página inicial" />
         </SuccessContainer>
       )}
     </>
