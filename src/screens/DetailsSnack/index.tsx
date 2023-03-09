@@ -13,19 +13,26 @@ import {
   ContainerButtonTwo,
 } from "./styles";
 import { useNavigation } from "@react-navigation/native";
+import { useRoute } from "@react-navigation/native"
+
+type routeParams = {
+  dietName: string
+}
 
 export function DetailsSnack() {
   const navigation = useNavigation();
+  const route = useRoute()
+  const { dietName } = route.params as routeParams
 
   function handleEditSnack() {
-    navigation.navigate("editSnack", { dietName: "miojo" });
+    navigation.navigate("editSnack", { dietName });
   }
 
   return (
     <Container>
       <Header title="Refeição" type="snack" color="#E5F0DB" />
       <Main>
-        <TitleOne>Sanduíche</TitleOne>
+        <TitleOne>{dietName}</TitleOne>
         <Text>
           Sanduíche de pão integral com atum e salada de alface e tomate
         </Text>

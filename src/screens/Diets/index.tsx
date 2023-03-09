@@ -8,7 +8,7 @@ import { FlatList } from "react-native";
 import { ListEmpty } from "@components/ListEmpty";
 import { useNavigation } from "@react-navigation/native";
 
-export type StatusTypeProps = "accomplished" | "defaulted";
+export type StatusTypeProps = "accomplished" | "defaulted" | null;
 interface DietProps {
   dietName: string;
   dietStatus: StatusTypeProps;
@@ -76,7 +76,7 @@ export function Diets() {
         keyExtractor={(item) => item.dietName}
         renderItem={({ item }) => (
           <Snack
-            dietName={item.dietDate}
+            dietName={item.dietName}
             dietStatus={item.dietStatus}
             hour={item.hour}
             onPress={() => handleNavigationDetailsSnack(item.dietName)}

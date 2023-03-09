@@ -13,15 +13,22 @@ import {
   ContainerInputsSelect,
   ContainerButton,
 } from "./styles";
+import { useRoute } from "@react-navigation/native"
+
+type routeParams = {
+  dietName: string
+}
 
 export function EditSnack() {
+  const route = useRoute()
+  const { dietName } = route.params as routeParams
   const [stateSelect, setStateSelect] = useState<string | null>(null);
 
   return (
     <Container>
       <Header
         pageReturn="detailsSnack"
-        dietName="nissin"
+        dietName={dietName}
         type="snack"
         color="#DDDEDF"
         title="Editar refeição"
@@ -29,7 +36,7 @@ export function EditSnack() {
       <Main>
         <ContainerInput>
           <Title>Nome</Title>
-          <Input />
+          <Input value={dietName} />
         </ContainerInput>
         <ContainerInput>
           <Title>Descrição</Title>

@@ -33,7 +33,7 @@ export const DietName = styled.Text`
   color: ${({ theme }) => theme.COLORS.GRAY_2};
 `;
 
-export type StatusTypeProps = "accomplished" | "defaulted";
+export type StatusTypeProps = "accomplished" | "defaulted" | null;
 
 type DietStatusProps = {
   type: StatusTypeProps;
