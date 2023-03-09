@@ -1,8 +1,4 @@
-import { Diets } from "./src/screens/Diets";
-import { ResultDiets } from "@screens/ResultDiets";
-import { NewSnack } from "@screens/NewSnack";
-import { EditSnack } from "@screens/EditSnack"; 
-import { DetailsSnack } from "@screens/DetailsSnack";
+import { Routes } from "@routes/index";
 import { ThemeProvider } from "styled-components/native";
 import theme from "@theme/index";
 import {
@@ -23,7 +19,7 @@ export default function App() {
         backgroundColor="transparent"
         translucent
       />
-      {fontsLoaded ? <EditSnack /> : <Loading />}
+      {fontsLoaded ? <Routes /> : <Loading />}
     </ThemeProvider>
   );
 }

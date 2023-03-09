@@ -59,6 +59,7 @@ export function Diets() {
             hour={item.hour}
           />
         )}
+        showsVerticalScrollIndicator={false}
         contentContainerStyle={diet.length === 0 && { flex: 1 }}
         ListEmptyComponent={() => (
           <ListEmpty message="Você ainda não adicionou nenhuma dieta!" />
