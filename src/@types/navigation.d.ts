@@ -3,9 +3,7 @@ export declare global {
     interface RootParamList {
       diets: undefined;
       newSnack: undefined;
-      resultDiets: {
-        dietName: string;
-      };
+      resultDiets: undefined;
       editSnack: {
         dietName: string;
       };

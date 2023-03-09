@@ -1,4 +1,5 @@
 import { Container, Percent, Text, ButtonIcon, Icon } from "./styles";
+import { useNavigation } from "@react-navigation/native";
 
 interface Props {
   height?: number;
@@ -17,9 +18,15 @@ export function ContainerInformation({
   title,
   iconRender = true,
 }: Props) {
+  const navigation = useNavigation();
+
+  function handleReturnPageResultDiets() {
+    navigation.navigate("resultDiets")
+  }
+
   return (
     <Container height={height} color={color}>
-      <ButtonIcon>
+      <ButtonIcon onPress={handleReturnPageResultDiets}>
         {iconRender && <Icon color={colorIcon} />}
       </ButtonIcon>
       <Percent>{title}</Percent>

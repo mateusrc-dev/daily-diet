@@ -12,8 +12,15 @@ import {
   ContainerButtonOne,
   ContainerButtonTwo,
 } from "./styles";
+import { useNavigation } from "@react-navigation/native";
 
 export function DetailsSnack() {
+  const navigation = useNavigation();
+
+  function handleEditSnack() {
+    navigation.navigate("editSnack", { dietName: "miojo" });
+  }
+
   return (
     <Container>
       <Header title="Refeição" type="snack" color="#E5F0DB" />
@@ -29,7 +36,7 @@ export function DetailsSnack() {
           <TextDietState>dentro da dieta</TextDietState>
         </ContainerDietState>
         <ContainerButtonOne>
-          <Button icon="pencil" title="Editar refeição" />
+          <Button icon="pencil" title="Editar refeição" onPress={handleEditSnack} />
         </ContainerButtonOne>
         <ContainerButtonTwo>
           <Button icon="trash" type="light" title="Excluir refeição" />
