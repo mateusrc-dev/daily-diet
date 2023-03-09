@@ -3,7 +3,7 @@ import { View } from "react-native";
 import styled from "styled-components/native";
 
 interface Props {
-  height: string,
+  height: number,
   color: string,
 }
 

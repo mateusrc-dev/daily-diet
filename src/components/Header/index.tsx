@@ -19,12 +19,14 @@ interface HeaderProps {
   type?: "default" | "percentDetails" | "snack";
   color?: string;
   colorIcon?: string;
+  title?: string
 }
 
 export function Header({
   type = "default",
   color = "#E5F0DB",
   colorIcon = "#639339",
+  title = "Nova refeição"
 }: HeaderProps) {
   return (
     <>
@@ -51,7 +53,7 @@ export function Header({
       )}
       {type === "snack" && (
         <SnackContainer color={color}>
-          <TextSnack>Nova refeição</TextSnack>
+          <TextSnack>{title}</TextSnack>
           <ButtonIconSnack>
             <IconSnack />
           </ButtonIconSnack>

@@ -1,7 +1,7 @@
 import { Container, Percent, Text, ButtonIcon, Icon } from "./styles";
 
 interface Props {
-  height?: string;
+  height?: number;
   color?: string;
   colorIcon?: string;
   title: string;
@@ -10,7 +10,7 @@ interface Props {
 }
 
 export function ContainerInformation({
-  height = "102px",
+  height = 102,
   color = "#E5F0DB",
   colorIcon = "#639339",
   text,

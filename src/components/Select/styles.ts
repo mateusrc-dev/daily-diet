@@ -1,7 +1,7 @@
 import { TouchableOpacity, View } from "react-native";
 import styled from "styled-components/native";
 
-export type TypeProps = "yes" | "not";
+export type TypeProps = "yes" | "not" | null;
 export type SelectProps = true | false;
 
 type Props = {
@@ -10,6 +10,7 @@ type Props = {
 };
 
 export const ContainerSelected = styled(TouchableOpacity)<Props>`
+  flex: 1;
   flex-direction: row;
   justify-content: center;
   align-items: center;
@@ -20,13 +21,14 @@ export const ContainerSelected = styled(TouchableOpacity)<Props>`
   background-color: ${({ theme, type }) =>
     type === "yes" ? theme.COLORS.GREEN_LIGHT : theme.COLORS.RED_LIGHT};
 
-  border-width: 1px;
+  border-width: ${({ select }) => (select === true ? 1 : 0)};
   border-style: solid;
   border-color: ${({ type, theme }) =>
     type === "yes" ? theme.COLORS.GREEN_DARK : theme.COLORS.RED_DARK};
 `;
 
 export const Container = styled(TouchableOpacity)<Props>`
+  flex: 1;
   flex-direction: row;
   justify-content: center;
   align-items: center;
@@ -37,7 +39,7 @@ export const Container = styled(TouchableOpacity)<Props>`
 
   background-color: ${({ theme }) => theme.COLORS.GRAY_8};
 
-  border-width: 1px;
+  border-width: ${({ select }) => (select === true ? 1 : 0)};
   border-style: solid;
   border-color: ${({ type, theme }) =>
     type === "yes" ? theme.COLORS.GREEN_DARK : theme.COLORS.RED_DARK};

@@ -1,4 +1,5 @@
 import styled from "styled-components/native";
+import { View } from "react-native";
 
 export const Container = styled.View`
   flex: 1;
@@ -22,14 +23,24 @@ export const Text = styled.Text`
   margin-bottom: 23px;
 `;
 
-export const ContainerSpace = styled.View`
-  width: 100%;
-  margin-top: 12px;
-`
+type Props = {
+  height: number;
+};
 
-export const ContainerSpaceRow = styled.View`
+export const ContainerSpace = styled(View)<Props>`
+  flex: 1;
   width: 100%;
+  min-height: ${({height}) => height};
+  max-height: ${({height}) => height};
+  margin-top: 12px;
+`;
+
+export const ContainerSpaceRow = styled(View)<Props>`
+  flex: 1;
+  width: 100%;
+  min-height: ${({height}) => height};
+  max-height: ${({height}) => height};
   flex-direction: row;
   margin-top: 12px;
   gap: 12px;
-`
+`;
