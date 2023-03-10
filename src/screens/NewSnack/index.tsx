@@ -3,6 +3,7 @@ import { Header } from "@components/Header";
 import { Input } from "@components/Input";
 import { Select } from "@components/Select";
 import { useState } from "react";
+import { Alert } from "react-native";
 import ImageSuccess from "../../assets/Illustration.png";
 import ImageFailure from "../../assets/Failure.png";
 import { useNavigation } from "@react-navigation/native";
@@ -23,6 +24,7 @@ import {
   TextBold,
 } from "./styles";
 import { dietCreate } from "@storage/diets/dietCreate";
+import { AppError } from "@utils/AppError";
 
 export function NewSnack() {
   const [stateSelect, setStateSelect] = useState<
@@ -46,20 +48,25 @@ export function NewSnack() {
       description: description,
     };
     if (
-      name.length !== 0 &&
-      description.length !== 0 &&
-      date.length !== 0 &&
-      hour.length !== 0 &&
+      name.trim().length !== 0 &&
+      description.trim().length !== 0 &&
+      date.trim().length !== 0 &&
+      hour.trim().length !== 0 &&
       stateSelect !== null
     ) {
       try {
         await dietCreate(newDiet);
         setChangePage(stateSelect);
       } catch (error) {
-        alert(error);
+        if (error instanceof AppError) {
+          Alert.alert("Nova dieta", error.message)
+        } else {
+          Alert.alert("Nova dieta", "Não foi possível criar uma nova dieta!")
+        }
       }
     } else {
-      alert(
+      Alert.alert(
+        "Nova dieta",
         "Preencha todos os campos e selecione se a refeição está dentro da dieta ou não!"
       );
     }

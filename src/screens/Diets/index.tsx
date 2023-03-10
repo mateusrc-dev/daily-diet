@@ -3,10 +3,13 @@ import { Header } from "@components/Header";
 import { ContainerInformation } from "@components/ContainerInformation";
 import { Container, ContainerSpace, Date, Title } from "./styles";
 import { Snack } from "@components/Snack";
-import { useState } from "react";
-import { FlatList } from "react-native";
+import { useState, useCallback, useEffect } from "react";
+import { FlatList, Alert, SectionList } from "react-native";
 import { ListEmpty } from "@components/ListEmpty";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useFocusEffect } from "@react-navigation/native";
+import { dietsGetAll } from "@storage/diets/dietsGetAll";
+import { AppError } from "@utils/AppError";
+import groupBy from "lodash/groupBy";
 
 export type StatusTypeProps = "accomplished" | "defaulted" | null;
 interface DietProps {
@@ -18,32 +21,8 @@ interface DietProps {
 }
 
 export function Diets() {
-  const [diet, setDiet] = useState<DietProps[]>([
-    {
-      dietName: "Nissin",
-      dietStatus: "accomplished",
-      hour: "14:00",
-      dietDate: "12.02.2023",
-      description:
-        "Comida muito boa e saudável que vai aumentar o seu tempo de vida",
-    },
-    {
-      dietName: "Mini Pizza",
-      dietStatus: "accomplished",
-      hour: "15:00",
-      dietDate: "12.02.2023",
-      description:
-        "Comida muito boa e saudável que vai aumentar o seu tempo de vida",
-    },
-    {
-      dietName: "Coxinha",
-      dietStatus: "accomplished",
-      hour: "16:00",
-      dietDate: "12.02.2023",
-      description:
-        "Comida muito boa e saudável que vai aumentar o seu tempo de vida",
-    },
-  ]);
+  const [diet, setDiet] = useState<DietProps[]>([]);
+  const [groupDietsByDate, setGroupDietsByDate] = useState([]);
   const navigation = useNavigation();
 
   function handleNewSnack() {
@@ -52,6 +31,58 @@ export function Diets() {
 
   function handleNavigationDetailsSnack(dietName: string) {
     navigation.navigate("detailsSnack", { dietName });
+  }
+
+  useFocusEffect(
+    useCallback(() => {
+      async function fetchDiets() {
+        try {
+          const getDiets = await dietsGetAll();
+          setDiet(getDiets);
+        } catch (error) {
+          if (error instanceof AppError) {
+            Alert.alert("Dietas", error.message);
+          } else {
+            Alert.alert("Dietas", "Não foi possível buscar pelos grupos!");
+          }
+        }
+      }
+      fetchDiets();
+    }, [])
+  );
+
+  useEffect(() => {
+    function handleDietsByDate() {
+      if (diet.length !== 0) {
+        const groupedList = Object.values(
+          groupBy(diet, function (d) {
+            return d.dietDate;
+          })
+        );
+        var data: any = [];
+        groupedList.map((date) => {
+          let section = {
+            title: date[0].dietDate,
+            data: [...date],
+          };
+          console.log(section);
+          data.push(section);
+        });
+        setGroupDietsByDate(data);
+      }
+    }
+    handleDietsByDate();
+  }, [diet]);
+
+  function renderDiet(item: any) {
+    return (
+      <Snack
+        dietName={item.dietName}
+        dietStatus={item.dietStatus}
+        hour={item.hour}
+        onPress={() => handleNavigationDetailsSnack(item.dietName)}
+      />
+    );
   }
 
   return (
@@ -70,22 +101,19 @@ export function Diets() {
         icon="plus"
         onPress={handleNewSnack}
       />
-      <Date>12.02.2023</Date>
-      <FlatList
-        data={diet}
-        keyExtractor={(item) => item.dietName}
-        renderItem={({ item }) => (
-          <Snack
-            dietName={item.dietName}
-            dietStatus={item.dietStatus}
-            hour={item.hour}
-            onPress={() => handleNavigationDetailsSnack(item.dietName)}
-          />
-        )}
+
+      <SectionList
+        sections={groupDietsByDate}
+        keyExtractor={(item) => String(item.dietDate)}
+        renderItem={({ item }) => renderDiet(item)}
+        renderSectionHeader={({ section: { title } }) => <Date>{title}</Date>}
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={diet.length === 0 && { flex: 1 }}
+        contentContainerStyle={[
+          { paddingBottom: 50 },
+          groupDietsByDate.length === 0 && { flex: 1 },
+        ]}
         ListEmptyComponent={() => (
-          <ListEmpty message="Você ainda não adicionou nenhuma dieta!" />
+          <ListEmpty message="Ainda não tem dietas cadastradas!" />
         )}
       />
     </Container>

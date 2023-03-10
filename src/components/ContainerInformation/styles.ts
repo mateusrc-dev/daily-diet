@@ -13,9 +13,8 @@ export const Container = styled(View)<Props>`
   align-items: center;
   padding: 20px 16px;
   gap: 2px;
-  flex: 1;
-  max-height: ${({ height }) => height};
-  min-height: ${({ height }) => height};
+  max-height: ${({ height }) => height}px;
+  min-height: ${({ height }) => height}px;
   background: ${({ color }) => color};
   border-radius: 8px;
 `;

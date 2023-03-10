@@ -1,6 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { StatusTypeProps } from "@screens/Diets";
 import { DIETS_COLLECTION } from "@storage/storageConfig";
+import { AppError } from "@utils/AppError";
 
 type DietProps = {
   dietName: string;
@@ -17,6 +18,6 @@ export async function dietsGetAll() {
 
     return diets;
   } catch (error) {
-    throw error;
+    throw new AppError("Não foi possível buscar pelos usuários!");
   }
 }

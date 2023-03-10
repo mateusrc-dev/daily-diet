@@ -19,7 +19,7 @@ export const Main = styled.View`
 export const Text = styled.Text`
   ${({ theme }) => css`
     font-family: ${theme.FONT_FAMILY.BOLD};
-    font-size: ${theme.FONT_SIZE.FS2};
+    font-size: ${theme.FONT_SIZE.FS2}px;
     color: ${theme.COLORS.GRAY_1};
   `}
   margin-top: 33px;
@@ -34,20 +34,18 @@ export const ContainerSpace = styled(View)<Props>`
   flex: 1;
   width: 100%;
   ${({ height }) => css`
-    min-height: ${height};
-    max-height: ${height};
+    min-height: ${height}px;
+    max-height: ${height}px;
   `}
   margin-top: 12px;
 `;
 
 export const ContainerSpaceRow = styled(View)<Props>`
   flex: 1;
-  width: 100%;
   ${({ height }) => css`
-    min-height: ${height};
-    max-height: ${height};
+    min-height: ${height}px;
+    max-height: ${height}px;
   `}
   flex-direction: row;
-  margin-top: 12px;
   gap: 12px;
 `;

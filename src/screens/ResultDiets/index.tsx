@@ -33,19 +33,23 @@ export function ResultDiets() {
           />
         </ContainerSpace>
         <ContainerSpaceRow height={107}>
-          <ContainerInformation
-            title="99"
-            text="refeições dentro da dieta"
-            iconRender={false}
-            height={107}
-          />
-          <ContainerInformation
-            title="10"
-            text="refeições fora da dieta"
-            iconRender={false}
-            color={"#F4E6E7"}
-            height={107}
-          />
+          <ContainerSpace height={107}>
+            <ContainerInformation
+              title="99"
+              text="refeições dentro da dieta"
+              iconRender={false}
+              height={107}
+            />
+          </ContainerSpace>
+          <ContainerSpace height={107}>
+            <ContainerInformation
+              title="10"
+              text="refeições fora da dieta"
+              iconRender={false}
+              color={"#F4E6E7"}
+              height={107}
+            />
+          </ContainerSpace>
         </ContainerSpaceRow>
       </Main>
     </Container>
