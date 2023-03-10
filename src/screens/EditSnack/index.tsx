@@ -2,7 +2,7 @@ import { Button } from "@components/Button";
 import { Header } from "@components/Header";
 import { Input } from "@components/Input";
 import { Select } from "@components/Select";
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import {
   Container,
   Main,
@@ -13,22 +13,71 @@ import {
   ContainerInputsSelect,
   ContainerButton,
 } from "./styles";
-import { useRoute } from "@react-navigation/native"
+import { useFocusEffect, useRoute } from "@react-navigation/native";
+import { dietsGetDietByNameAndDate } from "@storage/diets/dietsGetDietByNameAndDate";
+import { AppError } from "@utils/AppError";
+import { Alert } from "react-native";
+import { StatusTypeProps } from "@screens/Diets";
 
 type routeParams = {
-  dietName: string
+  Name: string;
+  Date: string;
+};
+interface DietProps {
+  dietName: string;
+  dietStatus: StatusTypeProps;
+  hour: string;
+  dietDate: string;
+  description: string;
 }
 
 export function EditSnack() {
-  const route = useRoute()
-  const { dietName } = route.params as routeParams
+  const route = useRoute();
+  const [snack, setSnack] = useState<DietProps[]>([]);
+  const [description, setDescription] = useState<string | null>("");
+  const [name, setName] = useState<string | null>("");
+  const [date, setDate] = useState<string | null>("");
+  const [hour, setHour] = useState<string | null>("");
   const [stateSelect, setStateSelect] = useState<string | null>(null);
+  const { Name, Date } = route.params as routeParams;
+
+  useFocusEffect(
+    useCallback(() => {
+      async function fetchDiet() {
+        try {
+          const snack = {
+            Name,
+            Date,
+          };
+          const getDiet = await dietsGetDietByNameAndDate(snack);
+          setSnack(getDiet);
+        } catch (error) {
+          if (error instanceof AppError) {
+            Alert.alert("Refeição", error.message);
+          } else {
+            Alert.alert("Refeição", "Não foi possível buscar pela refeição!");
+          }
+        }
+      }
+      fetchDiet();
+    }, [])
+  );
+
+  useFocusEffect(
+    useCallback(() => {
+      setStateSelect(snack.length !== 0 ? snack[0].dietStatus : null);
+      setName(snack.length !== 0 ? snack[0].dietName : null);
+      setDescription(snack.length !== 0 ? snack[0].description : null);
+      setHour(snack.length !== 0 ? snack[0].hour : null);
+      setDate(snack.length !== 0 ? snack[0].dietDate : null);
+    }, [snack])
+  );
 
   return (
     <Container>
       <Header
         pageReturn="detailsSnack"
-        dietName={dietName}
+        dietName={name !== null ? name : ""}
         type="snack"
         color="#DDDEDF"
         title="Editar refeição"
@@ -36,36 +85,39 @@ export function EditSnack() {
       <Main>
         <ContainerInput>
           <Title>Nome</Title>
-          <Input value={dietName} />
+          <Input value={name !== null ? name : ""} onChangeText={setName} />
         </ContainerInput>
         <ContainerInput>
           <Title>Descrição</Title>
-          <Input />
+          <Input
+            value={description !== null ? description : ""}
+            onChangeText={setDescription}
+          />
         </ContainerInput>
         <ContainerInputRow>
           <ContainerInput>
             <Title>Data</Title>
-            <Input />
+            <Input value={date !== null ? date : ""} onChangeText={setDate} />
           </ContainerInput>
           <ContainerInput>
             <Title>Hora</Title>
-            <Input />
+            <Input value={hour !== null ? hour : ""} onChangeText={setHour} />
           </ContainerInput>
         </ContainerInputRow>
         <ContainerInputsSelect>
           <Title>Está dentro da dieta?</Title>
           <ContainerSelect>
             <Select
-              onSelect={() => setStateSelect("yes")}
+              onSelect={() => setStateSelect("accomplished")}
               children="Sim"
               type="yes"
-              select={stateSelect === "yes"}
+              select={stateSelect === "accomplished"}
             />
             <Select
-              onSelect={() => setStateSelect("not")}
+              onSelect={() => setStateSelect("defaulted")}
               children="Não"
               type="not"
-              select={stateSelect === "not"}
+              select={stateSelect === "defaulted"}
             />
           </ContainerSelect>
         </ContainerInputsSelect>

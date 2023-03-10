@@ -4,7 +4,7 @@ import { ContainerInformation } from "@components/ContainerInformation";
 import { Container, ContainerSpace, Date, Title } from "./styles";
 import { Snack } from "@components/Snack";
 import { useState, useCallback, useEffect } from "react";
-import { FlatList, Alert, SectionList } from "react-native";
+import { Alert, SectionList } from "react-native";
 import { ListEmpty } from "@components/ListEmpty";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import { dietsGetAll } from "@storage/diets/dietsGetAll";
@@ -29,8 +29,8 @@ export function Diets() {
     navigation.navigate("newSnack");
   }
 
-  function handleNavigationDetailsSnack(dietName: string) {
-    navigation.navigate("detailsSnack", { dietName });
+  function handleNavigationDetailsSnack(dietName: string, dietDate: string) {
+    navigation.navigate("detailsSnack", { dietName, dietDate });
   }
 
   useFocusEffect(
@@ -80,7 +80,7 @@ export function Diets() {
         dietName={item.dietName}
         dietStatus={item.dietStatus}
         hour={item.hour}
-        onPress={() => handleNavigationDetailsSnack(item.dietName)}
+        onPress={() => handleNavigationDetailsSnack(item.dietName, item.dietDate)}
       />
     );
   }

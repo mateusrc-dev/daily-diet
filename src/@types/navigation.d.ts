@@ -5,10 +5,12 @@ export declare global {
       newSnack: undefined;
       resultDiets: undefined;
       editSnack: {
-        dietName: string;
+        Name: string;
+        Date: string;
       };
       detailsSnack: {
         dietName: string;
+        dietDate: string;
       };
     }
   }
