@@ -2,7 +2,7 @@ import { Button } from "@components/Button";
 import { Header } from "@components/Header";
 import { Input } from "@components/Input";
 import { Select } from "@components/Select";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useCallback } from "react";
 import {
   Container,
   Main,
@@ -13,11 +13,16 @@ import {
   ContainerInputsSelect,
   ContainerButton,
 } from "./styles";
-import { useFocusEffect, useRoute } from "@react-navigation/native";
+import {
+  useFocusEffect,
+  useNavigation,
+  useRoute,
+} from "@react-navigation/native";
 import { dietsGetDietByNameAndDate } from "@storage/diets/dietsGetDietByNameAndDate";
 import { AppError } from "@utils/AppError";
 import { Alert } from "react-native";
 import { StatusTypeProps } from "@screens/Diets";
+import { updateDiet } from "@storage/diets/dietUpdate";
 
 type routeParams = {
   Name: string;
@@ -40,6 +45,32 @@ export function EditSnack() {
   const [hour, setHour] = useState<string | null>("");
   const [stateSelect, setStateSelect] = useState<string | null>(null);
   const { Name, Date } = route.params as routeParams;
+  const navigation = useNavigation();
+
+  async function handleUpdateDiet() {
+    try {
+      const snack = {
+        dietName: Name,
+        dietDate: Date,
+      };
+      const dietUpdate = {
+        dietName: name,
+        dietStatus: stateSelect,
+        hour: hour,
+        dietDate: date,
+        description: description,
+      };
+      await updateDiet(snack, dietUpdate);
+      Alert.alert("Sucesso", "Atualização executada com sucesso!")
+      navigation.navigate("diets");
+    } catch (error) {
+      if (error instanceof AppError) {
+        Alert.alert("Atualizar", error.message);
+      } else {
+        Alert.alert("Atualizar", "Não foi possível atualizar a dieta!");
+      }
+    }
+  }
 
   useFocusEffect(
     useCallback(() => {
@@ -122,7 +153,7 @@ export function EditSnack() {
           </ContainerSelect>
         </ContainerInputsSelect>
         <ContainerButton>
-          <Button title="Salvar alterações" />
+          <Button title="Salvar alterações" onPress={handleUpdateDiet} />
         </ContainerButton>
       </Main>
     </Container>

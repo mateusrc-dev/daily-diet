@@ -9,8 +9,8 @@ export declare global {
         Date: string;
       };
       detailsSnack: {
-        dietName: string;
-        dietDate: string;
+        dietName: string | null;
+        dietDate: string | null;
       };
     }
   }

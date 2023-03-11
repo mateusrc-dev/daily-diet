@@ -104,7 +104,7 @@ export function Diets() {
 
       <SectionList
         sections={groupDietsByDate}
-        keyExtractor={(item) => String(item.dietDate)}
+        keyExtractor={(item) => String(item.dietName)}
         renderItem={({ item }) => renderDiet(item)}
         renderSectionHeader={({ section: { title } }) => <Date>{title}</Date>}
         showsVerticalScrollIndicator={false}

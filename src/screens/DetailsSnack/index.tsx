@@ -18,6 +18,7 @@ import { Alert } from "react-native";
 import { AppError } from "@utils/AppError";
 import { dietsGetDietByNameAndDate } from "@storage/diets/dietsGetDietByNameAndDate";
 import { StatusTypeProps } from "@screens/Diets";
+import { dietRemove } from "@storage/diets/dietRemove";
 
 type routeParams = {
   dietName: string;
@@ -37,10 +38,34 @@ export function DetailsSnack() {
   const route = useRoute();
   const { dietName, dietDate } = route.params as routeParams;
 
-  console.log(dietName, dietDate);
-
   function handleEditSnack(Name: string, Date: string) {
     navigation.navigate("editSnack", { Name, Date });
+  }
+
+  async function handleRemoveDiet() {
+    Alert.alert("Remover", "Deseja remover a dieta?", [
+      {text: "Não", style: "cancel"},
+      {text: "Sim", onPress: () => handleDietsRemove()}
+    ])
+  }
+
+  console.log(dietName, dietDate)
+
+  async function handleDietsRemove() {
+    try {
+      const snack = {
+        dietName,
+        dietDate,
+      };
+      await dietRemove(snack)
+      navigation.navigate("diets");
+    } catch (error) {
+      if (error instanceof AppError) {
+        Alert.alert("Remover", error.message);
+      } else {
+        Alert.alert("Remover", "Não foi possível remover essa dieta!");
+      }
+    }
   }
 
   useEffect(() => {
@@ -98,7 +123,12 @@ export function DetailsSnack() {
           />
         </ContainerButtonOne>
         <ContainerButtonTwo>
-          <Button icon="trash" type="light" title="Excluir refeição" />
+          <Button
+            icon="trash"
+            type="light"
+            title="Excluir refeição"
+            onPress={handleRemoveDiet}
+          />
         </ContainerButtonTwo>
       </Main>
     </Container>

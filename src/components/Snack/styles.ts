@@ -46,5 +46,5 @@ export const DietStatus = styled(View)<DietStatusProps>`
   position: absolute;
   right: 16px;
   background-color: ${({ theme, type }) =>
-    type === "accomplished" ? theme.COLORS.RED_MID : theme.COLORS.GREEN_MID};
+    type === "accomplished" ? theme.COLORS.GREEN_MID : theme.COLORS.RED_MID};
 `;
