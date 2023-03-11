@@ -12,8 +12,9 @@ export const Container = styled(TouchableOpacity)<ButtonProps>`
   justify-content: center;
   align-items: center;
   gap: 12px;
-  width: 100%;
-  height: 50px;
+  flex: 1;
+  min-height: 50px;
+  max-height: 50px;
   background: ${({ theme, type }) =>
     type === "dark" ? theme.COLORS.GRAY_2 : theme.COLORS.WHITE};
   border-width: 1px;

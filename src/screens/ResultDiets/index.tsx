@@ -1,5 +1,11 @@
 import { ContainerInformation } from "@components/ContainerInformation";
 import { Header } from "@components/Header";
+import { useFocusEffect } from "@react-navigation/native";
+import { StatusTypeProps } from "@screens/Diets";
+import { dietsGetAll } from "@storage/diets/dietsGetAll";
+import { AppError } from "@utils/AppError";
+import { useCallback, useState } from "react";
+import { Alert } from "react-native";
 import {
   Container,
   ContainerSpace,
@@ -8,7 +14,35 @@ import {
   Text,
 } from "./styles";
 
+interface DietProps {
+  dietName: string;
+  dietStatus: StatusTypeProps;
+  hour: string;
+  dietDate: string;
+  description: string;
+}
+
 export function ResultDiets() {
+  const [diets, setDiets] = useState<DietProps[]>([]);
+
+  useFocusEffect(
+    useCallback(() => {
+      async function fetchDiets() {
+        try {
+          const getDiets = await dietsGetAll();
+          setDiets(getDiets);
+        } catch (error) {
+          if (error instanceof AppError) {
+            Alert.alert("Dietas", error.message);
+          } else {
+            Alert.alert("Dietas", "Não foi possível buscar pelos grupos!");
+          }
+        }
+      }
+      fetchDiets();
+    }, [])
+  );
+
   return (
     <Container>
       <Header type="percentDetails" />

@@ -26,7 +26,7 @@ export async function dietCreate(newDiet: newDietProps) {
 
     await AsyncStorage.setItem(
       DIETS_COLLECTION,
-      JSON.stringify([...Diets, newDiet])
+      JSON.stringify([...Diets, newDiet].reverse())
     );
   } catch (error) {
     throw new AppError("Não foi possível criar uma nova dieta!");

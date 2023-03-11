@@ -9,8 +9,11 @@ import {
   TextDietState,
   TitleOne,
   TitleTwo,
-  ContainerButtonOne,
-  ContainerButtonTwo,
+  BackgroundModal,
+  Modal,
+  TextModal,
+  ContainerButtons,
+  ContainerButton,
 } from "./styles";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { useEffect, useState } from "react";
@@ -36,20 +39,20 @@ export function DetailsSnack() {
   const [snack, setSnack] = useState<DietProps[]>([]);
   const navigation = useNavigation();
   const route = useRoute();
+  const [modal, setModal] = useState<boolean>(false);
   const { dietName, dietDate } = route.params as routeParams;
 
   function handleEditSnack(Name: string, Date: string) {
     navigation.navigate("editSnack", { Name, Date });
   }
 
-  async function handleRemoveDiet() {
-    Alert.alert("Remover", "Deseja remover a dieta?", [
-      {text: "Não", style: "cancel"},
-      {text: "Sim", onPress: () => handleDietsRemove()}
-    ])
+  function handleRemoveDiet() {
+    setModal(true);
   }
 
-  console.log(dietName, dietDate)
+  function handleCancelDelete() {
+    setModal(false);
+  }
 
   async function handleDietsRemove() {
     try {
@@ -57,7 +60,8 @@ export function DetailsSnack() {
         dietName,
         dietDate,
       };
-      await dietRemove(snack)
+      await dietRemove(snack);
+      setModal(false);
       navigation.navigate("diets");
     } catch (error) {
       if (error instanceof AppError) {
@@ -90,6 +94,27 @@ export function DetailsSnack() {
 
   return (
     <Container>
+      {modal && (
+        <BackgroundModal>
+          <Modal>
+            <TextModal>
+              Deseja realmente excluir o registro da refeição?
+            </TextModal>
+            <ContainerButtons>
+              <Button
+                title="Cancelar"
+                type="light"
+                onPress={handleCancelDelete}
+              />
+              <Button
+                title="Sim, excluir"
+                type="dark"
+                onPress={handleDietsRemove}
+              />
+            </ContainerButtons>
+          </Modal>
+        </BackgroundModal>
+      )}
       <Header title="Refeição" type="snack" color="#E5F0DB" />
       <Main>
         <TitleOne>{dietName}</TitleOne>
@@ -113,23 +138,22 @@ export function DetailsSnack() {
               : "fora da dieta"}
           </TextDietState>
         </ContainerDietState>
-        <ContainerButtonOne>
+        <ContainerButton>
           <Button
             icon="pencil"
             title="Editar refeição"
             onPress={() =>
               handleEditSnack(snack[0].dietName, snack[0].dietDate)
             }
+            style={{ marginTop: "auto" }}
           />
-        </ContainerButtonOne>
-        <ContainerButtonTwo>
           <Button
             icon="trash"
             type="light"
             title="Excluir refeição"
             onPress={handleRemoveDiet}
           />
-        </ContainerButtonTwo>
+        </ContainerButton>
       </Main>
     </Container>
   );

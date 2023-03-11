@@ -75,11 +75,44 @@ export const StateDiet = styled(View)<Props>`
   border-radius: 1000px;
 `;
 
-export const ContainerButtonOne = styled.View`
-  margin-top: auto;
-  margin-bottom: 9px;
+export const ContainerButton = styled.View`
+  flex: 1;
+  gap: 10px;
+  margin-bottom: 40px;
 `;
 
-export const ContainerButtonTwo = styled.View`
-  margin-bottom: 40px;
+export const BackgroundModal = styled.View`
+  position: absolute;
+  z-index: 1;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.5);
+`;
+
+export const Modal = styled.View`
+  width: 327px;
+  max-height: 192px;
+  padding: 24px;
+  margin: auto;
+  background: ${({ theme }) => theme.COLORS.WHITE};
+  border-radius: 8px;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+`;
+
+export const TextModal = styled.Text`
+  font-family: ${({ theme }) => theme.FONT_FAMILY.BOLD};
+  font-size: ${({ theme }) => theme.FONT_SIZE.FS4}px;
+  text-align: center;
+  color: ${({ theme }) => theme.COLORS.GRAY_2};
+`;
+
+export const ContainerButtons = styled.View`
+  flex-direction: row;
+  gap: 12px;
 `;
