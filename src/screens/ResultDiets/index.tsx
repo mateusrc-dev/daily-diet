@@ -4,7 +4,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import { StatusTypeProps } from "@screens/Diets";
 import { dietsGetAll } from "@storage/diets/dietsGetAll";
 import { AppError } from "@utils/AppError";
-import { useCallback, useState } from "react";
+import { useCallback, useState, useEffect } from "react";
 import { Alert } from "react-native";
 import {
   Container,
@@ -24,6 +24,21 @@ interface DietProps {
 
 export function ResultDiets() {
   const [diets, setDiets] = useState<DietProps[]>([]);
+  const [insideDiet, setInsideDiet] = useState<number>(0);
+  const [outsideDiet, setOutsideDiet] = useState<number>(0);
+
+  useEffect(() => {
+    function handleResultDiets() {
+      for (let i = 0; i < diets.length; i += 1) {
+        if (diets[i].dietStatus === "accomplished") {
+          setInsideDiet((state) => state + 1);
+        } else {
+          setOutsideDiet((state) => state + 1);
+        }
+      }
+    }
+    handleResultDiets();
+  }, [diets]);
 
   useFocusEffect(
     useCallback(() => {
@@ -59,7 +74,7 @@ export function ResultDiets() {
         </ContainerSpace>
         <ContainerSpace height={89}>
           <ContainerInformation
-            title="109"
+            title={String(diets.length)}
             text="refeições registradas"
             iconRender={false}
             color={"#EFF0F0"}
@@ -69,7 +84,7 @@ export function ResultDiets() {
         <ContainerSpaceRow height={107}>
           <ContainerSpace height={107}>
             <ContainerInformation
-              title="99"
+              title={String(insideDiet)}
               text="refeições dentro da dieta"
               iconRender={false}
               height={107}
@@ -77,7 +92,7 @@ export function ResultDiets() {
           </ContainerSpace>
           <ContainerSpace height={107}>
             <ContainerInformation
-              title="10"
+              title={String(outsideDiet)}
               text="refeições fora da dieta"
               iconRender={false}
               color={"#F4E6E7"}

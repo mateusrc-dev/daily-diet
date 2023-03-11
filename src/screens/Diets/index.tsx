@@ -90,7 +90,7 @@ export function Diets() {
       <Header />
       <ContainerSpace>
         <ContainerInformation
-          title="90,86%"
+          percent
           text="das refeições dentro da dieta"
         />
       </ContainerSpace>

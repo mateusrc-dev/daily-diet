@@ -14,7 +14,13 @@ import {
   TextSnack,
 } from "./styles";
 import LogoImg from "@assets/Logo.png";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import { useEffect, useState, useCallback } from "react";
+import { PercentResult } from "@components/percentResult";
+import { StatusTypeProps } from "@screens/Diets";
+import { dietsGetAll } from "@storage/diets/dietsGetAll";
+import { AppError } from "@utils/AppError";
+import { Alert } from "react-native";
 
 interface HeaderProps {
   type?: "default" | "percentDetails" | "snack";
@@ -22,6 +28,7 @@ interface HeaderProps {
   colorIcon?: string;
   title?: string;
   dietName?: string;
+  dietDate?: string;
   pageReturn?:
     | "detailsSnack"
     | "diets"
@@ -37,18 +44,59 @@ export function Header({
   title = "Nova refeição",
   pageReturn = "diets",
   dietName = "miojo",
+  dietDate = "12/12/2022",
 }: HeaderProps) {
   const navigation = useNavigation();
 
   function handleReturnPage() {
     pageReturn === "diets" && navigation.navigate("diets");
     pageReturn === "detailsSnack" &&
-      navigation.navigate("detailsSnack", { dietName });
+      navigation.navigate("detailsSnack", { dietName, dietDate });
     pageReturn === "editSnack" &&
-      navigation.navigate("editSnack", { dietName });
+      navigation.navigate("editSnack", { Name: dietName, Date: dietDate });
     pageReturn === "newSnack" && navigation.navigate("newSnack");
     pageReturn === "resultDiets" && navigation.navigate("resultDiets");
   }
+
+  interface DietProps {
+    dietName: string;
+    dietStatus: StatusTypeProps;
+    hour: string;
+    dietDate: string;
+    description: string;
+  }
+
+  const [diets, setDiets] = useState<DietProps[]>([]);
+  const [insideDiet, setInsideDiet] = useState<number>(0);
+
+  useEffect(() => {
+    function handleResultDiets() {
+      for (let i = 0; i < diets.length; i += 1) {
+        if (diets[i].dietStatus === "accomplished") {
+          setInsideDiet((state) => state + 1);
+        }
+      }
+    }
+    handleResultDiets();
+  }, [diets]);
+
+  useFocusEffect(
+    useCallback(() => {
+      async function fetchDiets() {
+        try {
+          const getDiets = await dietsGetAll();
+          setDiets(getDiets);
+        } catch (error) {
+          if (error instanceof AppError) {
+            Alert.alert("Dietas", error.message);
+          } else {
+            Alert.alert("Dietas", "Não foi possível buscar pelos grupos!");
+          }
+        }
+      }
+      fetchDiets();
+    }, [])
+  );
 
   return (
     <>
@@ -66,7 +114,7 @@ export function Header({
       )}
       {type === "percentDetails" && (
         <PercentContainer color={color}>
-          <Percent>90,86%</Percent>
+          <Percent>{(insideDiet * 100) / diets.length}%</Percent>
           <Text>das refeições dentro da dieta</Text>
           <ButtonIcon onPress={handleReturnPage}>
             <Icon color={colorIcon} />
