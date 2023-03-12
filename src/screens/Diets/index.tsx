@@ -24,6 +24,9 @@ export function Diets() {
   const [diet, setDiet] = useState<DietProps[]>([]);
   const [groupDietsByDate, setGroupDietsByDate] = useState([]);
   const navigation = useNavigation();
+  const [insideDiet, setInsideDiet] = useState<number>(0);
+
+  console.log(insideDiet);
 
   function handleNewSnack() {
     navigation.navigate("newSnack");
@@ -33,11 +36,25 @@ export function Diets() {
     navigation.navigate("detailsSnack", { dietName, dietDate });
   }
 
+  useEffect(() => {
+    function handleResultDiets() {
+      let num = 0;
+      for (let i = 0; i < diet.length; i += 1) {
+        if (diet[i].dietStatus === "accomplished") {
+          num = num + 1;
+        }
+      }
+      setInsideDiet(num)
+    }
+    handleResultDiets();
+  }, [diet]);
+
   useFocusEffect(
     useCallback(() => {
       async function fetchDiets() {
         try {
           const getDiets = await dietsGetAll();
+
           setDiet(getDiets);
         } catch (error) {
           if (error instanceof AppError) {
@@ -65,7 +82,6 @@ export function Diets() {
             title: date[0].dietDate,
             data: [...date],
           };
-          console.log(section);
           data.push(section);
         });
         setGroupDietsByDate(data);
@@ -80,7 +96,9 @@ export function Diets() {
         dietName={item.dietName}
         dietStatus={item.dietStatus}
         hour={item.hour}
-        onPress={() => handleNavigationDetailsSnack(item.dietName, item.dietDate)}
+        onPress={() =>
+          handleNavigationDetailsSnack(item.dietName, item.dietDate)
+        }
       />
     );
   }
@@ -90,7 +108,7 @@ export function Diets() {
       <Header />
       <ContainerSpace>
         <ContainerInformation
-          percent
+          title={String((insideDiet * 100) / diet.length + "%")}
           text="das refeições dentro da dieta"
         />
       </ContainerSpace>

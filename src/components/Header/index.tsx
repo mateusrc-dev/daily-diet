@@ -16,7 +16,6 @@ import {
 import LogoImg from "@assets/Logo.png";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { useEffect, useState, useCallback } from "react";
-import { PercentResult } from "@components/percentResult";
 import { StatusTypeProps } from "@screens/Diets";
 import { dietsGetAll } from "@storage/diets/dietsGetAll";
 import { AppError } from "@utils/AppError";
@@ -35,6 +34,14 @@ interface HeaderProps {
     | "editSnack"
     | "resultDiets"
     | "newSnack";
+}
+
+interface DietProps {
+  dietName: string;
+  dietStatus: StatusTypeProps;
+  hour: string;
+  dietDate: string;
+  description: string;
 }
 
 export function Header({
@@ -56,14 +63,6 @@ export function Header({
       navigation.navigate("editSnack", { Name: dietName, Date: dietDate });
     pageReturn === "newSnack" && navigation.navigate("newSnack");
     pageReturn === "resultDiets" && navigation.navigate("resultDiets");
-  }
-
-  interface DietProps {
-    dietName: string;
-    dietStatus: StatusTypeProps;
-    hour: string;
-    dietDate: string;
-    description: string;
   }
 
   const [diets, setDiets] = useState<DietProps[]>([]);

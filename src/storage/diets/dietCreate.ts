@@ -1,5 +1,4 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { StatusTypeProps } from "@screens/Diets";
 import { DIETS_COLLECTION } from "@storage/storageConfig";
 import { AppError } from "@utils/AppError";
 import { dietsGetAll } from "./dietsGetAll";

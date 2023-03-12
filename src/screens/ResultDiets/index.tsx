@@ -3,6 +3,7 @@ import { Header } from "@components/Header";
 import { useFocusEffect } from "@react-navigation/native";
 import { StatusTypeProps } from "@screens/Diets";
 import { dietsGetAll } from "@storage/diets/dietsGetAll";
+import { addItemInSequence } from "@storage/sequence/addIteminSequence";
 import { AppError } from "@utils/AppError";
 import { useCallback, useState, useEffect } from "react";
 import { Alert } from "react-native";
@@ -26,6 +27,13 @@ export function ResultDiets() {
   const [diets, setDiets] = useState<DietProps[]>([]);
   const [insideDiet, setInsideDiet] = useState<number>(0);
   const [outsideDiet, setOutsideDiet] = useState<number>(0);
+
+  useEffect(() => {
+    async function handleNewItemSequence() {
+      addItemInSequence(1);
+    }
+    handleNewItemSequence()
+  }, [])
 
   useEffect(() => {
     function handleResultDiets() {
