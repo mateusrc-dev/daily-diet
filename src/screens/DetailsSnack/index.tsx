@@ -121,7 +121,7 @@ export function DetailsSnack() {
         <Text>{snack.length !== 0 && snack[0].description}</Text>
         <TitleTwo>Data e hora</TitleTwo>
         <Text>
-          {snack.length !== 0 && snack[0].dietDate} às{" "}
+          {snack.length !== 0 && (snack[0].dietDate).replaceAll(".", "/")} às{" "}
           {snack.length !== 0 && snack[0].hour}
         </Text>
         <ContainerDietState>

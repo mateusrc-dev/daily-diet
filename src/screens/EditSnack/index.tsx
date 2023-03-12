@@ -128,7 +128,7 @@ export function EditSnack() {
         <ContainerInputRow>
           <ContainerInput>
             <Title>Data</Title>
-            <Input value={date !== null ? date : ""} onChangeText={setDate} />
+            <Input value={date !== null ? date.replaceAll(".", "/") : ""} onChangeText={setDate} />
           </ContainerInput>
           <ContainerInput>
             <Title>Hora</Title>

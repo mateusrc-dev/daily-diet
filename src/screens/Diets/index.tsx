@@ -123,6 +123,11 @@ export function Diets() {
               ? "#E5F0DB"
               : "#F4E6E7"
           }
+          colorIcon={
+            Number((insideDiet * 100) / diet.length) >= 50
+              ? "#639339"
+              : "#BF3B44"
+          }
         />
       </ContainerSpace>
       <Title>Refeições</Title>

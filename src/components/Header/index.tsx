@@ -122,7 +122,13 @@ export function Header({
           <Percent>{((insideDiet * 100) / diets.length).toFixed(2)}%</Percent>
           <Text>das refeições dentro da dieta</Text>
           <ButtonIcon onPress={handleReturnPage}>
-            <Icon color={colorIcon} />
+            <Icon
+              color={
+                Number((insideDiet * 100) / diets.length) >= 50
+                  ? "#639339"
+                  : "#BF3B44"
+              }
+            />
           </ButtonIcon>
         </PercentContainer>
       )}
