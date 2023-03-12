@@ -25,6 +25,7 @@ import {
 } from "./styles";
 import { dietCreate } from "@storage/diets/dietCreate";
 import { AppError } from "@utils/AppError";
+import { changeCountSequence } from "@storage/sequence/changeCountSequence";
 
 export function NewSnack() {
   const [stateSelect, setStateSelect] = useState<
@@ -57,6 +58,11 @@ export function NewSnack() {
       try {
         await dietCreate(newDiet);
         setChangePage(stateSelect);
+        if (stateSelect === "accomplished") {
+          await changeCountSequence(1)
+        } else {
+          await changeCountSequence(0)
+        }
       } catch (error) {
         if (error instanceof AppError) {
           Alert.alert("Nova dieta", error.message)

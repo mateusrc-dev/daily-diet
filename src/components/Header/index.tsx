@@ -112,8 +112,14 @@ export function Header({
         </Container>
       )}
       {type === "percentDetails" && (
-        <PercentContainer color={color}>
-          <Percent>{(insideDiet * 100) / diets.length}%</Percent>
+        <PercentContainer
+          color={
+            Number((insideDiet * 100) / diets.length) > 50
+              ? "#E5F0DB"
+              : "#F4E6E7"
+          }
+        >
+          <Percent>{((insideDiet * 100) / diets.length).toFixed(2)}%</Percent>
           <Text>das refeições dentro da dieta</Text>
           <ButtonIcon onPress={handleReturnPage}>
             <Icon color={colorIcon} />

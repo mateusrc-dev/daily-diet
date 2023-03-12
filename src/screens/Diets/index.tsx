@@ -10,7 +10,8 @@ import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import { dietsGetAll } from "@storage/diets/dietsGetAll";
 import { AppError } from "@utils/AppError";
 import groupBy from "lodash/groupBy";
-import { addItemInSequence } from "@storage/sequence/addIteminSequence";
+import { isUndefined } from "lodash";
+// import { addItemInSequence } from "../../storage/sequence/addItemInSequence";
 
 export type StatusTypeProps = "accomplished" | "defaulted" | null;
 interface DietProps {
@@ -44,12 +45,12 @@ export function Diets() {
         }
       }
       setInsideDiet(num);
-      try {
+      /*try {
         console.log(num);
         await addItemInSequence(num);
       } catch (error) {
         console.log(error);
-      }
+      }*/
     }
     handleResultDiets();
   }, [diet]);
@@ -113,8 +114,15 @@ export function Diets() {
       <Header />
       <ContainerSpace>
         <ContainerInformation
-          title={String((insideDiet * 100) / diet.length + "%")}
+          title={
+            String(Number((insideDiet * 100) / diet.length).toFixed(2)) + "%"
+          }
           text="das refeições dentro da dieta"
+          color={
+            Number((insideDiet * 100) / diet.length) > 50
+              ? "#E5F0DB"
+              : "#F4E6E7"
+          }
         />
       </ContainerSpace>
       <Title>Refeições</Title>
