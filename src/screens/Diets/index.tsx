@@ -1,7 +1,7 @@
 import { Button } from "@components/Button";
 import { Header } from "@components/Header";
 import { ContainerInformation } from "@components/ContainerInformation";
-import { Container, ContainerSpace, Date, Title } from "./styles";
+import { Container, ContainerSpace, Date, Gradient, Title } from "./styles";
 import { Snack } from "@components/Snack";
 import { useState, useCallback, useEffect } from "react";
 import { Alert, SectionList } from "react-native";
@@ -160,6 +160,7 @@ export function Diets() {
               <ListEmpty message="Ainda não tem dietas cadastradas!" />
             )}
           />
+          <Gradient colors={["transparent", "#fafafa"]} />
         </Container>
       )}
     </>

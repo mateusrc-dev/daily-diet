@@ -1,8 +1,10 @@
 import { SafeAreaView } from "react-native-safe-area-context";
 import styled, { css } from "styled-components/native";
+import { LinearGradient } from 'expo-linear-gradient';
 
 export const Container = styled(SafeAreaView)`
   flex: 1;
+  width: 100%;
   background-color: ${({ theme }) => theme.COLORS.GRAY_7};
   padding: 0 24px;
 `;
@@ -30,3 +32,11 @@ export const Date = styled.Text`
 export const ContainerSpace = styled.View`
   margin-top: 32px;
 `;
+
+export const Gradient = styled(LinearGradient)`
+  position: absolute;
+  width: 100%;
+  height: 100px;
+  bottom: 0px;
+  left: 24px;
+`
