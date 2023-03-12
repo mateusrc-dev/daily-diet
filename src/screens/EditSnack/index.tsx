@@ -23,6 +23,7 @@ import { AppError } from "@utils/AppError";
 import { Alert } from "react-native";
 import { StatusTypeProps } from "@screens/Diets";
 import { updateDiet } from "@storage/diets/dietUpdate";
+import { Loading } from "@components/Loading";
 
 type routeParams = {
   Name: string;
@@ -46,6 +47,7 @@ export function EditSnack() {
   const [stateSelect, setStateSelect] = useState<string | null>(null);
   const { Name, Date } = route.params as routeParams;
   const navigation = useNavigation();
+  const [loading, setLoading] = useState<boolean>(false);
 
   async function handleUpdateDiet() {
     try {
@@ -61,7 +63,7 @@ export function EditSnack() {
         description: description,
       };
       await updateDiet(snack, dietUpdate);
-      Alert.alert("Sucesso", "Atualização executada com sucesso!")
+      Alert.alert("Sucesso", "Atualização executada com sucesso!");
       navigation.navigate("diets");
     } catch (error) {
       if (error instanceof AppError) {
@@ -76,6 +78,7 @@ export function EditSnack() {
     useCallback(() => {
       async function fetchDiet() {
         try {
+          setLoading(true);
           const snack = {
             Name,
             Date,
@@ -88,6 +91,8 @@ export function EditSnack() {
           } else {
             Alert.alert("Refeição", "Não foi possível buscar pela refeição!");
           }
+        } finally {
+          setLoading(false);
         }
       }
       fetchDiet();
@@ -114,44 +119,56 @@ export function EditSnack() {
         title="Editar refeição"
       />
       <Main>
-        <ContainerInput>
-          <Title>Nome</Title>
-          <Input value={name !== null ? name : ""} onChangeText={setName} />
-        </ContainerInput>
-        <ContainerInput>
-          <Title>Descrição</Title>
-          <Input
-            value={description !== null ? description : ""}
-            onChangeText={setDescription}
-          />
-        </ContainerInput>
-        <ContainerInputRow>
-          <ContainerInput>
-            <Title>Data</Title>
-            <Input value={date !== null ? date.replaceAll(".", "/") : ""} onChangeText={setDate} />
-          </ContainerInput>
-          <ContainerInput>
-            <Title>Hora</Title>
-            <Input value={hour !== null ? hour : ""} onChangeText={setHour} />
-          </ContainerInput>
-        </ContainerInputRow>
-        <ContainerInputsSelect>
-          <Title>Está dentro da dieta?</Title>
-          <ContainerSelect>
-            <Select
-              onSelect={() => setStateSelect("accomplished")}
-              children="Sim"
-              type="yes"
-              select={stateSelect === "accomplished"}
-            />
-            <Select
-              onSelect={() => setStateSelect("defaulted")}
-              children="Não"
-              type="not"
-              select={stateSelect === "defaulted"}
-            />
-          </ContainerSelect>
-        </ContainerInputsSelect>
+        {loading ? (
+          <Loading />
+        ) : (
+          <>
+            <ContainerInput>
+              <Title>Nome</Title>
+              <Input value={name !== null ? name : ""} onChangeText={setName} />
+            </ContainerInput>
+            <ContainerInput>
+              <Title>Descrição</Title>
+              <Input
+                value={description !== null ? description : ""}
+                onChangeText={setDescription}
+              />
+            </ContainerInput>
+            <ContainerInputRow>
+              <ContainerInput>
+                <Title>Data</Title>
+                <Input
+                  value={date !== null ? date.replaceAll(".", "/") : ""}
+                  onChangeText={setDate}
+                />
+              </ContainerInput>
+              <ContainerInput>
+                <Title>Hora</Title>
+                <Input
+                  value={hour !== null ? hour : ""}
+                  onChangeText={setHour}
+                />
+              </ContainerInput>
+            </ContainerInputRow>
+            <ContainerInputsSelect>
+              <Title>Está dentro da dieta?</Title>
+              <ContainerSelect>
+                <Select
+                  onSelect={() => setStateSelect("accomplished")}
+                  children="Sim"
+                  type="yes"
+                  select={stateSelect === "accomplished"}
+                />
+                <Select
+                  onSelect={() => setStateSelect("defaulted")}
+                  children="Não"
+                  type="not"
+                  select={stateSelect === "defaulted"}
+                />
+              </ContainerSelect>
+            </ContainerInputsSelect>
+          </>
+        )}
         <ContainerButton>
           <Button title="Salvar alterações" onPress={handleUpdateDiet} />
         </ContainerButton>

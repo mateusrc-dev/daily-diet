@@ -21,7 +21,7 @@ export const ContainerSelected = styled(TouchableOpacity)<Props>`
   background-color: ${({ theme, type }) =>
     type === "yes" ? theme.COLORS.GREEN_LIGHT : theme.COLORS.RED_LIGHT};
 
-  border-width: ${({ select }) => (select === true ? 1 : 0)};
+  border-width: ${({ select }) => (select === true ? 1 : 0)}px;
   border-style: solid;
   border-color: ${({ type, theme }) =>
     type === "yes" ? theme.COLORS.GREEN_DARK : theme.COLORS.RED_DARK};
@@ -39,7 +39,7 @@ export const Container = styled(TouchableOpacity)<Props>`
 
   background-color: ${({ theme }) => theme.COLORS.GRAY_8};
 
-  border-width: ${({ select }) => (select === true ? 1 : 0)};
+  border-width: ${({ select }) => (select === true ? 1 : 0)}px;
   border-style: solid;
   border-color: ${({ type, theme }) =>
     type === "yes" ? theme.COLORS.GREEN_DARK : theme.COLORS.RED_DARK};

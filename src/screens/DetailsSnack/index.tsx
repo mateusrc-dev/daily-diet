@@ -22,6 +22,7 @@ import { AppError } from "@utils/AppError";
 import { dietsGetDietByNameAndDate } from "@storage/diets/dietsGetDietByNameAndDate";
 import { StatusTypeProps } from "@screens/Diets";
 import { dietRemove } from "@storage/diets/dietRemove";
+import { Loading } from "@components/Loading";
 
 type routeParams = {
   dietName: string;
@@ -41,6 +42,7 @@ export function DetailsSnack() {
   const route = useRoute();
   const [modal, setModal] = useState<boolean>(false);
   const { dietName, dietDate } = route.params as routeParams;
+  const [loading, setLoading] = useState<boolean>(false);
 
   function handleEditSnack(Name: string, Date: string) {
     navigation.navigate("editSnack", { Name, Date });
@@ -74,6 +76,7 @@ export function DetailsSnack() {
 
   useEffect(() => {
     async function fetchDiet() {
+      setLoading(true);
       try {
         const snack = {
           Name: dietName,
@@ -87,6 +90,8 @@ export function DetailsSnack() {
         } else {
           Alert.alert("Refeição", "Não foi possível buscar pela refeição!");
         }
+      } finally {
+        setLoading(false);
       }
     }
     fetchDiet();
@@ -117,27 +122,33 @@ export function DetailsSnack() {
       )}
       <Header title="Refeição" type="snack" color="#E5F0DB" />
       <Main>
-        <TitleOne>{dietName}</TitleOne>
-        <Text>{snack.length !== 0 && snack[0].description}</Text>
-        <TitleTwo>Data e hora</TitleTwo>
-        <Text>
-          {snack.length !== 0 && (snack[0].dietDate).replaceAll(".", "/")} às{" "}
-          {snack.length !== 0 && snack[0].hour}
-        </Text>
-        <ContainerDietState>
-          <StateDiet
-            type={
-              snack.length !== 0 && snack[0].dietStatus === "accomplished"
-                ? "success"
-                : "failure"
-            }
-          />
-          <TextDietState>
-            {snack.length !== 0 && snack[0].dietStatus === "accomplished"
-              ? "dentro da dieta"
-              : "fora da dieta"}
-          </TextDietState>
-        </ContainerDietState>
+        {loading ? (
+          <Loading />
+        ) : (
+          <>
+            <TitleOne>{dietName}</TitleOne>
+            <Text>{snack.length !== 0 && snack[0].description}</Text>
+            <TitleTwo>Data e hora</TitleTwo>
+            <Text>
+              {snack.length !== 0 && snack[0].dietDate.replaceAll(".", "/")} às{" "}
+              {snack.length !== 0 && snack[0].hour}
+            </Text>
+            <ContainerDietState>
+              <StateDiet
+                type={
+                  snack.length !== 0 && snack[0].dietStatus === "accomplished"
+                    ? "success"
+                    : "failure"
+                }
+              />
+              <TextDietState>
+                {snack.length !== 0 && snack[0].dietStatus === "accomplished"
+                  ? "dentro da dieta"
+                  : "fora da dieta"}
+              </TextDietState>
+            </ContainerDietState>
+          </>
+        )}
         <ContainerButton>
           <Button
             icon="pencil"

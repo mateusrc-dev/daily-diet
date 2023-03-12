@@ -20,6 +20,7 @@ import { StatusTypeProps } from "@screens/Diets";
 import { dietsGetAll } from "@storage/diets/dietsGetAll";
 import { AppError } from "@utils/AppError";
 import { Alert } from "react-native";
+import { LoadingTwo } from "@components/LoadingTwo";
 
 interface HeaderProps {
   type?: "default" | "percentDetails" | "snack";
@@ -53,6 +54,9 @@ export function Header({
   dietName = "miojo",
   dietDate = "12/12/2022",
 }: HeaderProps) {
+  const [diets, setDiets] = useState<DietProps[]>([]);
+  const [insideDiet, setInsideDiet] = useState<number>(0);
+  const [loading, setLoading] = useState<boolean>(false);
   const navigation = useNavigation();
 
   function handleReturnPage() {
@@ -65,16 +69,15 @@ export function Header({
     pageReturn === "resultDiets" && navigation.navigate("resultDiets");
   }
 
-  const [diets, setDiets] = useState<DietProps[]>([]);
-  const [insideDiet, setInsideDiet] = useState<number>(0);
-
   useEffect(() => {
     function handleResultDiets() {
+      setLoading(true);
       for (let i = 0; i < diets.length; i += 1) {
         if (diets[i].dietStatus === "accomplished") {
           setInsideDiet((state) => state + 1);
         }
       }
+      setLoading(false);
     }
     handleResultDiets();
   }, [diets]);
@@ -83,6 +86,7 @@ export function Header({
     useCallback(() => {
       async function fetchDiets() {
         try {
+          setLoading(true);
           const getDiets = await dietsGetAll();
           setDiets(getDiets);
         } catch (error) {
@@ -91,6 +95,8 @@ export function Header({
           } else {
             Alert.alert("Dietas", "Não foi possível buscar pelos grupos!");
           }
+        } finally {
+          setLoading(false);
         }
       }
       fetchDiets();
@@ -111,27 +117,30 @@ export function Header({
           </ContainerAvatar>
         </Container>
       )}
-      {type === "percentDetails" && (
-        <PercentContainer
-          color={
-            Number((insideDiet * 100) / diets.length) >= 50
-              ? "#E5F0DB"
-              : "#F4E6E7"
-          }
-        >
-          <Percent>{((insideDiet * 100) / diets.length).toFixed(2)}%</Percent>
-          <Text>das refeições dentro da dieta</Text>
-          <ButtonIcon onPress={handleReturnPage}>
-            <Icon
-              color={
-                Number((insideDiet * 100) / diets.length) >= 50
-                  ? "#639339"
-                  : "#BF3B44"
-              }
-            />
-          </ButtonIcon>
-        </PercentContainer>
-      )}
+      {type === "percentDetails" &&
+        (loading ? (
+          <LoadingTwo />
+        ) : (
+          <PercentContainer
+            color={
+              Number((insideDiet * 100) / diets.length) >= 50
+                ? "#E5F0DB"
+                : "#F4E6E7"
+            }
+          >
+            <Percent>{((insideDiet * 100) / diets.length).toFixed(2)}%</Percent>
+            <Text>das refeições dentro da dieta</Text>
+            <ButtonIcon onPress={handleReturnPage}>
+              <Icon
+                color={
+                  Number((insideDiet * 100) / diets.length) >= 50
+                    ? "#639339"
+                    : "#BF3B44"
+                }
+              />
+            </ButtonIcon>
+          </PercentContainer>
+        ))}
       {type === "snack" && (
         <SnackContainer color={color}>
           <TextSnack>{title}</TextSnack>
