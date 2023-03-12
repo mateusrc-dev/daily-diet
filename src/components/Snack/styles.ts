@@ -24,7 +24,8 @@ export const Hour = styled.Text`
 export const Separate = styled.View`
   width: 0px;
   height: 14px;
-  border: 1px solid ${({ theme }) => theme.COLORS.GRAY_4};
+  border: 0px solid ${({ theme }) => theme.COLORS.GRAY_4};
+  border-left-width: 1px;
 `;
 
 export const DietName = styled.Text`

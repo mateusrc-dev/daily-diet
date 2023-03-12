@@ -22,6 +22,7 @@ import {
   TextSuccess,
   TitleFailure,
   TextBold,
+  ContainerButtonTwo,
 } from "./styles";
 import { dietCreate } from "@storage/diets/dietCreate";
 import { AppError } from "@utils/AppError";
@@ -42,11 +43,11 @@ export function NewSnack() {
 
   async function handleNewDiet() {
     const newDiet = {
-      dietName: name,
+      dietName: name.trim(),
       dietStatus: stateSelect,
-      hour: hour,
-      dietDate: date,
-      description: description,
+      hour: hour.trim(),
+      dietDate: date.trim().replaceAll("/", "."),
+      description: description.trim(),
     };
     if (
       name.trim().length !== 0 &&
@@ -59,15 +60,15 @@ export function NewSnack() {
         await dietCreate(newDiet);
         setChangePage(stateSelect);
         if (stateSelect === "accomplished") {
-          await changeCountSequence(1)
+          await changeCountSequence(1);
         } else {
-          await changeCountSequence(0)
+          await changeCountSequence(0);
         }
       } catch (error) {
         if (error instanceof AppError) {
-          Alert.alert("Nova dieta", error.message)
+          Alert.alert("Nova dieta", error.message);
         } else {
-          Alert.alert("Nova dieta", "Não foi possível criar uma nova dieta!")
+          Alert.alert("Nova dieta", "Não foi possível criar uma nova dieta!");
         }
       }
     } else {
@@ -99,11 +100,11 @@ export function NewSnack() {
             <ContainerInputRow>
               <ContainerInput>
                 <Title>Data</Title>
-                <Input onChangeText={setDate} />
+                <Input onChangeText={setDate} placeholder="ex. 12/12/2023" />
               </ContainerInput>
               <ContainerInput>
                 <Title>Hora</Title>
-                <Input onChangeText={setHour} />
+                <Input onChangeText={setHour} placeholder="ex. 12:00" />
               </ContainerInput>
             </ContainerInputRow>
             <ContainerInputsSelect>
@@ -136,7 +137,12 @@ export function NewSnack() {
             Você continua <TextBold>dentro da dieta</TextBold>. Muito bem!
           </TextSuccess>
           <ImageContainer source={ImageSuccess} />
-          <Button title="Ir para a página inicial" onPress={handleReturnPage} />
+          <ContainerButtonTwo>
+            <Button
+              title="Ir para a página inicial"
+              onPress={handleReturnPage}
+            />
+          </ContainerButtonTwo>
         </SuccessContainer>
       )}
       {changePage === "defaulted" && (
@@ -147,7 +153,12 @@ export function NewSnack() {
             esforçando e não desista!
           </TextSuccess>
           <ImageContainer source={ImageFailure} />
-          <Button title="Ir para a página inicial" onPress={handleReturnPage} />
+          <ContainerButtonTwo>
+            <Button
+              title="Ir para a página inicial"
+              onPress={handleReturnPage}
+            />
+          </ContainerButtonTwo>
         </SuccessContainer>
       )}
     </>

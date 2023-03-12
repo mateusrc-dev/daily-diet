@@ -114,7 +114,7 @@ export function Header({
       {type === "percentDetails" && (
         <PercentContainer
           color={
-            Number((insideDiet * 100) / diets.length) > 50
+            Number((insideDiet * 100) / diets.length) >= 50
               ? "#E5F0DB"
               : "#F4E6E7"
           }

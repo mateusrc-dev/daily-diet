@@ -52,6 +52,7 @@ export const ContainerSelect = styled.View`
 `;
 
 export const ContainerButton = styled.View`
+  flex: 1;
   width: 100%;
-  margin-bottom: 40px;
+  margin-top: auto;
 `;

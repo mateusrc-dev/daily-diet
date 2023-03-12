@@ -52,8 +52,13 @@ export const ContainerSelect = styled.View`
 `;
 
 export const ContainerButton = styled.View`
+  flex: 1;
   width: 100%;
-  margin-bottom: 40px;
+  margin-top: auto;
+`;
+
+export const ContainerButtonTwo = styled.View`
+  width: 100%;
 `;
 
 export const SuccessContainer = styled.View`

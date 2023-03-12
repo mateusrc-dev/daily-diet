@@ -119,7 +119,7 @@ export function Diets() {
           }
           text="das refeições dentro da dieta"
           color={
-            Number((insideDiet * 100) / diet.length) > 50
+            Number((insideDiet * 100) / diet.length) >= 50
               ? "#E5F0DB"
               : "#F4E6E7"
           }
