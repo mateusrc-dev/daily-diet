@@ -3,7 +3,9 @@ import { ITEMS_COLLECTION } from "@storage/storageConfig";
 import { AppError } from "@utils/AppError";
 import { getSequence } from "./getSequence";
 
-export async function addItemInSequence(newItem: number) {
+type newItem = number
+
+export async function addItemInSequence(newItem: newItem) {
   try {
     const items = await getSequence();
 
@@ -12,7 +14,7 @@ export async function addItemInSequence(newItem: number) {
     );
 
     if (itemAlreadyExists.length !== 0) {
-      throw new AppError("Esse item já existe!");
+      return;
     }
 
     await AsyncStorage.setItem(

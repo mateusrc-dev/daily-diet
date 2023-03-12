@@ -10,6 +10,7 @@ import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import { dietsGetAll } from "@storage/diets/dietsGetAll";
 import { AppError } from "@utils/AppError";
 import groupBy from "lodash/groupBy";
+import { addItemInSequence } from "@storage/sequence/addIteminSequence";
 
 export type StatusTypeProps = "accomplished" | "defaulted" | null;
 interface DietProps {
@@ -26,8 +27,6 @@ export function Diets() {
   const navigation = useNavigation();
   const [insideDiet, setInsideDiet] = useState<number>(0);
 
-  console.log(insideDiet);
-
   function handleNewSnack() {
     navigation.navigate("newSnack");
   }
@@ -37,14 +36,20 @@ export function Diets() {
   }
 
   useEffect(() => {
-    function handleResultDiets() {
+    async function handleResultDiets() {
       let num = 0;
       for (let i = 0; i < diet.length; i += 1) {
         if (diet[i].dietStatus === "accomplished") {
           num = num + 1;
         }
       }
-      setInsideDiet(num)
+      setInsideDiet(num);
+      try {
+        console.log(num);
+        await addItemInSequence(num);
+      } catch (error) {
+        console.log(error);
+      }
     }
     handleResultDiets();
   }, [diet]);

@@ -3,7 +3,7 @@ import { Header } from "@components/Header";
 import { useFocusEffect } from "@react-navigation/native";
 import { StatusTypeProps } from "@screens/Diets";
 import { dietsGetAll } from "@storage/diets/dietsGetAll";
-import { addItemInSequence } from "@storage/sequence/addIteminSequence";
+import { getSequence } from "@storage/sequence/getSequence";
 import { AppError } from "@utils/AppError";
 import { useCallback, useState, useEffect } from "react";
 import { Alert } from "react-native";
@@ -27,13 +27,9 @@ export function ResultDiets() {
   const [diets, setDiets] = useState<DietProps[]>([]);
   const [insideDiet, setInsideDiet] = useState<number>(0);
   const [outsideDiet, setOutsideDiet] = useState<number>(0);
+  const [sequence, setSequence] = useState<number[]>([])
 
-  useEffect(() => {
-    async function handleNewItemSequence() {
-      addItemInSequence(1);
-    }
-    handleNewItemSequence()
-  }, [])
+  console.log(sequence)
 
   useEffect(() => {
     function handleResultDiets() {
@@ -66,6 +62,18 @@ export function ResultDiets() {
     }, [])
   );
 
+  useEffect(() => {
+    async function handleGetSequenceItems() {
+      try {
+        const itemsSequence = await getSequence()
+        setSequence(itemsSequence)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    handleGetSequenceItems()
+  }, [diets])
+
   return (
     <Container>
       <Header type="percentDetails" />
@@ -73,7 +81,7 @@ export function ResultDiets() {
         <Text>Estatísticas gerais</Text>
         <ContainerSpace height={89}>
           <ContainerInformation
-            title="22"
+            title={String(Math.max(...sequence))}
             text="melhor sequência de pratos dentro da dieta"
             iconRender={false}
             color={"#EFF0F0"}
