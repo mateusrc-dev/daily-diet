@@ -41,6 +41,7 @@ type Props = {
 }
 
 export const PercentContainer = styled(View)<Props>`
+margin-top: -30px;
   width: 100%;
   max-height: 200px;
   min-height: 200px;
@@ -78,6 +79,7 @@ export const ButtonIcon = styled.TouchableOpacity`
 `;
 
 export const SnackContainer = styled(View)<Props>`
+  margin-top: -25px;
   width: 100%;
   max-height: 132px;
   min-height: 132px;

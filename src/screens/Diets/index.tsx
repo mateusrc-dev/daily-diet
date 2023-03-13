@@ -120,8 +120,9 @@ export function Diets() {
           <ContainerSpace>
             <ContainerInformation
               title={
-                String(Number((insideDiet * 100) / diet.length).toFixed(2)) +
-                "%"
+                String(
+                  Number((insideDiet * 100) / diet.length).toFixed(2)
+                ).replace(".", ",") + "%"
               }
               text="das refeições dentro da dieta"
               color={
@@ -153,7 +154,7 @@ export function Diets() {
             )}
             showsVerticalScrollIndicator={false}
             contentContainerStyle={[
-              { paddingBottom: 50 },
+              { paddingBottom: 100 },
               groupDietsByDate.length === 0 && { flex: 1 },
             ]}
             ListEmptyComponent={() => (

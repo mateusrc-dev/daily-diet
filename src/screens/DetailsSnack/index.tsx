@@ -120,7 +120,15 @@ export function DetailsSnack() {
           </Modal>
         </BackgroundModal>
       )}
-      <Header title="Refeição" type="snack" color="#E5F0DB" />
+      <Header
+        title="Refeição"
+        type="snack"
+        color={
+          snack.length !== 0 && snack[0].dietStatus === "accomplished"
+            ? "#E5F0DB"
+            : "#F4E6E7"
+        }
+      />
       <Main>
         {loading ? (
           <Loading />
