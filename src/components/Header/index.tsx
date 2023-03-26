@@ -129,11 +129,11 @@ export function Header({
             }
           >
             <Percent>
-              {String(((insideDiet * 100) / diets.length).toFixed(2)).replace(
-                ".",
-                ","
-              )}
-              %
+              {String(
+                Number.isNaN((insideDiet * 100) / diets.length)
+                  ? "0"
+                  : Number((insideDiet * 100) / diets.length).toFixed(2)
+              ).replace(".", ",") + "%"}
             </Percent>
             <Text>das refeições dentro da dieta</Text>
             <ButtonIcon onPress={handleReturnPage}>

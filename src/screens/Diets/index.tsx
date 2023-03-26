@@ -27,6 +27,7 @@ export function Diets() {
   const navigation = useNavigation();
   const [insideDiet, setInsideDiet] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(false);
+  const [state, setState] = useState<boolean>(false);
 
   function handleNewSnack() {
     navigation.navigate("newSnack");
@@ -58,7 +59,11 @@ export function Diets() {
           setLoading(true);
           const getDiets = await dietsGetAll();
 
-          setDiet(getDiets);
+          if (getDiets.length !== 0) {
+            setDiet(getDiets);
+          } else {
+            setDiet([]);
+          }
         } catch (error) {
           if (error instanceof AppError) {
             Alert.alert("Dietas", error.message);
@@ -91,7 +96,22 @@ export function Diets() {
           data.push(section);
         });
         setGroupDietsByDate(data);
-      }
+      } else if (diet.length === 0) {
+        const groupedList = Object.values(
+          groupBy(diet, function (d) {
+            return d.dietDate;
+          })
+        );
+        var data: any = [];
+        groupedList.map((date) => {
+          let section = {
+            title: "",
+            data: [],
+          };
+          data.push(section);
+        });
+        setGroupDietsByDate(data);
+      } 
       setLoading(false);
     }
     handleDietsByDate();
@@ -121,7 +141,9 @@ export function Diets() {
             <ContainerInformation
               title={
                 String(
-                  Number((insideDiet * 100) / diet.length).toFixed(2)
+                  Number.isNaN((insideDiet * 100) / diet.length)
+                    ? "0"
+                    : Number((insideDiet * 100) / diet.length).toFixed(2)
                 ).replace(".", ",") + "%"
               }
               text="das refeições dentro da dieta"

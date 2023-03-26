@@ -86,7 +86,7 @@ export const BackgroundModal = styled.View`
   z-index: 1;
   height: 100%;
   width: 100%;
-  top: 0;
+  top: 25px;
   left: 0;
   align-items: center;
   justify-content: center;
